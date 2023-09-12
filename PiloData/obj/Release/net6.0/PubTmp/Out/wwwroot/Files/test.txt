@@ -1,0 +1,48 @@
+DECLARE @OEEID INT
+DECLARE OEE_CURSOR CURSOR FOR
+SELECT [OeeID]    
+  FROM [ORLOF4].[GND_Local_Reasons].[dbo].[Vw_OeeCalculationDate]
+
+OPEN OEE_CURSOR
+FETCH NEXT FROM OEE_CURSOR INTO @OEEID
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    IF EXISTS(SELECT 
+        [OeeLocalID]
+        ,[OeeMachineID]
+        ,[Oeedatetime]
+        ,[Downtime]
+        ,[ShiftNo]
+        ,[ShiftDate]
+        ,[InsertedTime]
+    FROM [OEEDBCenter].[dbo].[Temp_OeeResults]
+    WHERE [OeeLocalID] = @OEEID)
+        BEGIN
+            SELECT 'Record Exists'
+        END
+    ELSE
+        BEGIN
+            DELETE FROM TEMP_OEERESULTS
+            INSERT INTO [dbo].[Temp_OeeResults]
+                ([OeeLocalID]
+                ,[OeeMachineID]
+                ,[Oeedatetime]
+                ,[Downtime]
+                ,[ShiftNo]
+                ,[ShiftDate]
+                ,[InsertedTime])
+            SELECT [OeeID]
+                ,[OeeMachineID]
+                ,[Oeedatetime]
+                ,[Downtime]
+                ,[ShiftNo]
+                ,[ShiftDate]
+                ,GETDATE()
+            FROM [ORLOF4].[GND_Local_Reasons].[dbo].[Vw_OeeCalculationDate]  
+        END
+    FETCH NEXT FROM OEE_CURSOR INTO @OEEID
+END
+
+CLOSE OEE_CURSOR
+DEALLOCATE OEE_CURSOR

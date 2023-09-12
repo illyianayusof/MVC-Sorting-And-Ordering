@@ -1,0 +1,35 @@
+﻿@model PiloData.Models.FromTextFile
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div>
+    <table class="table table-bordered" style="width:100%">
+        <tr>
+            <th>ENTNAHME</th>
+            <th>ERSATZ</th>
+            <th>TYP</th>
+            <th>ERF_USER</th>
+            <th>ERF_DATUM</th>
+            <th>Prefix</th>
+            <th>Midfix</th>
+            <th>Suffix</th>
+        </tr>
+        @foreach (FromTextFile text in ViewBag.FromTextFile)
+        {
+            <tr>
+                <td>@text.ENTNAHME</td>
+                <td>@text.ERSATZ</td>
+                <td>@text.TYP</td>
+                <td>@text.ERF_USER</td>
+                <td>@text.ERF_DATUM</td>
+                <td>@text.Prefix_ENTNAHME</td>
+                <td>@text.Middle_ENTNAHME</td>
+                <td>@text.Suffix_ENTNAHME</td>
+            </tr>
+        }
+    </table>
+</div>

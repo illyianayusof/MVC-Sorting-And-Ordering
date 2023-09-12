@@ -1,0 +1,210 @@
+﻿@model PiloData.Models.SingleFileModel
+@*@model PiloData.Models.FromTextFile*@
+
+@{
+    ViewData["Title"] = "Upload Successful";
+}
+
+<html>
+    <head>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+    </head>
+
+    <body>
+    <div class="submit-progress invisible">
+        <label>Please wait while Saving Data...</label>
+    </div>
+
+        <script>
+            //submit search, display loading message
+            $('input[type = submit]').click(function () {
+                alert("HELLO");
+                //$.blockUI({
+                //    css: {
+                //        border: 'none',
+                //        padding: '15px',
+                //        backgroundColor: '#000',
+                //        opacity: .6
+                //    }
+                //});
+            });
+        </script>
+
+        <form method="post" enctype="multipart/form-data">
+
+            @if (Model.IsResponse)
+            {
+                if (Model.IsSuccess)
+                {
+                    <br />
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div align="center" class="alert alert-success" style="width:90%">
+                            @Model.Message
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <br />
+                    <div class="alert alert-danger">
+                        @Model.Message
+                    </div>
+
+                }
+            }
+            else
+            {
+                <br />
+                <div class="alert alert-danger">
+                    @Model.Message
+                </div>
+                <a class="btn btn-warning" asp-area="" asp-controller="FileUpload" asp-action="Index">Back</a>
+
+            }
+        </form>
+
+
+        @if (Model.IsResponse)
+        {
+            if (Model.IsSuccess)
+            {
+                <div align="center">
+                    <table>
+                        <tr>
+                            <td>
+                                @using (Html.BeginForm("Export", "FileUpload", FormMethod.Post))
+                                {
+                                    <input align="center" class="btn btn-info" type="submit" id="btnSubmit" value="Export as CSV" />
+                                }
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("CheckIncremental", "FileUpload", FormMethod.Post))
+                                {
+                                <input align="center" class="btn btn-warning" type="submit" id="btnSubmit" value="Check Incremental"/>
+                                }
+
+                          @*  <input align="center" class="btn btn-warning" type="submit" id="btnSubmit" value="Check Incremental TEST" onclick="return DisplayProgressMessage(this, 'testing');" />
+
+                                <script>
+                                    function DisplayProgressMessage(ctl, msg) {
+                                    $(ctl).prop("disabled", true).text("Checking");
+                                    $(".submit-progress").removeClass("invisible");
+                                    $(".submit-progress").add("visible");
+
+                                    $.ajax({                                        
+                                        url: "FileUpload/CheckIncremental",                                                                         
+                                        cache: false,
+                                        async: true,
+                                        contentType: "application/json; charset=utf-8",
+                                        //data: { a: "testing" },
+                                        success: function () {
+                                            alert("hi");
+                                        }
+                                    });
+
+                                    function successFunc(data, status) {
+                                        alert(data);
+                                    }
+
+                                    function errorFunc() {
+                                        alert('error');
+                                    }
+                                   
+                                    return true;
+                                    };    
+
+                                </script>*@
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <a class="btn btn-warning" asp-area="" asp-controller="FileUpload" asp-action="Index">Back</a>
+            }
+        }
+
+        <form method="post" enctype="multipart/form-data">
+
+            @if (Model.IsResponse)
+            {
+                if (Model.IsSuccess)
+                {
+                    <br />
+
+                    <table style="width:90%" align="center">
+                        <tr>
+                            <td><b>Network Number</b></td>
+                            <td><b>Number of Rows in File</b></td>
+                            <td><b>Number of Selected Rows</b></td>
+                            @*                    <td><b>Inserted Date</b></td>
+                    *@
+                            <td><b>Number of Prefixes</b></td>
+                        </tr>
+                        <tr>
+                            <td>@Html.TextBoxFor(m => m.NetworkNumber, new {disabled = "disabled",  @class = "form-control wide", style = "width:15em;"})</td>
+                            <td>@Html.TextBoxFor(m => m.TotalNoOfRows, new {disabled = "disabled", @class = "form-control", style = "width:15em;" })</td>
+                            <td>@Html.TextBoxFor(m => m.NoOfRows, new {disabled = "disabled", @class = "form-control", style = "width:15em;" })</td>
+                            @*                  <td>@Html.TextBoxFor(m => m.InsertedTime, new {disabled = "disabled", @class = "form-control wide", style = "width:12em;" })</td>
+                    *@
+                            <td>@Html.TextBoxFor(m => m.NoOfGroups, new {disabled = "disabled", @class = "form-control", style = "width:15em;" })</td>
+                        </tr>
+                    </table>
+                    <br />
+
+                    <table class="table table-bordered" style="width:90%" align="center">
+                        <tr>
+                            <th>Prefix</th>
+                            <th>Suffix</th>
+                            <th>No. of Rows</th>
+                        </tr>
+                        @foreach (GroupByModel groupByModel in ViewBag.DataGrouped)
+                        {
+                            <tr>
+                                <td>@groupByModel.PrefixGroup</td>
+                                <td>@groupByModel.SuffixGroup</td>
+                                <td>@groupByModel.Key</td>
+                            </tr>
+                        }
+                    </table>
+                    <br />
+
+                    @*<div>
+            <table class="table table-bordered" style="width:100%">
+            <tr>
+            <th>ENTNAHME</th>
+            <th>ERSATZ</th>
+            <th>TYP</th>
+            <th>ERF_USER</th>
+            <th>ERF_DATUM</th>
+            <th>Prefix</th>
+            <th>Midfix</th>
+            <th>Suffix</th>
+            </tr>
+            @foreach (FromTextFile text in ViewBag.Data)
+            {
+            <tr>
+            <td>@text.ENTNAHME</td>
+            <td>@text.ERSATZ</td>
+            <td>@text.TYP</td>
+            <td>@text.ERF_USER</td>
+            <td>@text.ERF_DATUM</td>
+            <td>@text.Prefix_ENTNAHME</td>
+            <td>@text.Middle_ENTNAHME</td>
+            <td>@text.Suffix_ENTNAHME</td>
+            </tr>
+            }
+            </table>
+            </div>*@
+
+
+                }
+            }
+
+        </form>
+    </body>
+</html>
+

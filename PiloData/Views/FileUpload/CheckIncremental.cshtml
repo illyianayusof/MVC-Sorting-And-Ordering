@@ -1,0 +1,39 @@
+﻿@model PiloData.Models.SingleFileModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<br />
+<div class="d-flex align-items-center justify-content-center">
+    <div align="center" class="alert alert-info" style="width:90%">
+        @ViewBag.Check
+    </div>    
+</div>
+
+<br>
+
+<div align="center">
+    <table>
+        <tr>
+            <td>
+                @using (Html.BeginForm("Export", "FileUpload", FormMethod.Post))
+                {
+                    <input align="center" class="btn btn-info" type="submit" id="btnSubmit" value="Export all within the range as CSV" />
+                }
+            </td>
+            <td>
+                @if (ViewBag.Export == true)
+                {
+                    @using (Html.BeginForm("Export1000", "FileUpload", FormMethod.Post))
+                    {
+                        <input align="center" class="btn btn-warning" type="submit" id="btnSubmit" value="Export the occurring 1000 as CSV" />
+                    }
+                }
+            </td>
+        </tr>
+    </table>
+   
+</div>

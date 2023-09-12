@@ -1,0 +1,7 @@
+C:\Users\GDMYCT IT\source\repos\PiloData\PiloData\obj\Release\net7.0\PubTmp\Out\PiloData.exe
+C:\Users\GDMYCT IT\source\repos\PiloData\PiloData\obj\Release\net7.0\PubTmp\Out\appsettings.Development.json
+C:\Users\GDMYCT IT\source\repos\PiloData\PiloData\obj\Release\net7.0\PubTmp\Out\appsettings.json
+C:\Users\GDMYCT IT\source\repos\PiloData\PiloData\obj\Release\net7.0\PubTmp\Out\PiloData.dll
+C:\Users\GDMYCT IT\source\repos\PiloData\PiloData\obj\Release\net7.0\PubTmp\Out\PiloData.deps.json
+C:\Users\GDMYCT IT\source\repos\PiloData\PiloData\obj\Release\net7.0\PubTmp\Out\PiloData.runtimeconfig.json
+C:\Users\GDMYCT IT\source\repos\PiloData\PiloData\obj\Release\net7.0\PubTmp\Out\PiloData.pdb

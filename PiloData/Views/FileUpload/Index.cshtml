@@ -1,0 +1,145 @@
+﻿@model PiloData.Models.SingleFileModel
+
+@{
+    ViewData["Title"] = "File Upload";
+}
+
+<html>        
+    <body>
+    <form asp-action="Upload" asp-controller="FileUpload" method="post" enctype="multipart/form-data">
+      
+        @if (ViewBag.Success == "false")
+        {
+            <script type="text/javascript">
+                window.onload = function () {
+                    alert("@ViewBag.Message");
+                };
+            </script>
+        }
+
+        <div class="uploadingFile">
+            <div class="row mt-2">
+                <div class="col-12">
+                    <label class="col-form-label">
+                        <h3>Select File</h3>
+                    </label>
+                    <input asp-for="File" class="form-control" />
+                    <div>
+                        <br />
+                        <label class="col-form-label">
+                            <h3>Select Range</h3>
+                        </label>
+                        <table style="border-spacing: 10px;">
+                            <tr>
+                                <td>
+                                    <div style="background-color:#E9ECEF; border:1px solid #CED4DA; border-radius:4px; padding-left:10px; padding-right:10px; padding-top:6px; padding-bottom:6px;">
+                                        Start Range:
+                                    </div>
+                                </td>
+                                <td><input asp-for="StartRange" class="form-control" type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="background-color:#E9ECEF; border:1px solid #CED4DA; border-radius:3px; padding-left:10px; padding-right:10px; padding-top:6px; padding-bottom:6px;">
+                                        End Range:
+                                    </div>
+                                </td>
+                                </td>
+                                <td><input asp-for="EndRange" class="form-control" type="text"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <span asp-validation-for="File" class="text-danger"></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-12">
+                <br />
+                <button id="SubmitBtn" type="submit" class="btn btn-success">Upload File</button>
+            </div>
+        </div>
+
+       @* @if (Model.IsResponse)
+        {
+            if (Model.IsSuccess)
+            {
+
+                <table style="width:80%" align="center">
+                    <tr>
+                        <td>Network Number: </td>
+                        <td>Total Number of Rows</td>
+                        <td>Inserted Date</td>
+                        <td>No of Groups</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.TextBoxFor(m => m.NetworkNumber, new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(m => m.NoOfRows, new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(m => m.InsertedTime, new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(m => m.NoOfGroups, new { @class = "form-control" })</td>
+                    </tr>
+                </table>
+                <br />
+
+                <table class="table table-bordered" style="width:80%" align="center">
+                    <tr>
+                        <th>Prefix</th>
+                        <th>Suffix</th>
+                        <th>No. of Rows</th>
+                    </tr>
+                    @foreach (GroupByModel groupByModel in ViewBag.DataGrouped)
+                    {
+                        <tr>
+                            <td>@groupByModel.Prefix</td>
+                            <td>@groupByModel.SuffixGroup</td>
+                            <td>@groupByModel.Key</td>
+                        </tr>
+                    }
+                </table>
+                <br />
+
+
+
+                <div>
+                    <table class="table table-bordered" style="width:100%">
+                        <tr>
+                            <th>ENTNAHME</th>
+                            <th>ERSATZ</th>
+                            <th>TYP</th>
+                            <th>ERF_USER</th>
+                            <th>ERF_DATUM</th>
+                            <th>Prefix</th>
+                            <th>Midfix</th>
+                            <th>Suffix</th>
+                        </tr>
+                        @foreach (FromTextFile text in ViewBag.Data)
+                        {
+                            <tr>
+                                <td>@text.ENTNAHME</td>
+                                <td>@text.ERSATZ</td>
+                                <td>@text.TYP</td>
+                                <td>@text.ERF_USER</td>
+                                <td>@text.ERF_DATUM</td>
+                                <td>@text.Prefix_ENTNAHME</td>
+                                <td>@text.Middle_ENTNAHME</td>
+                                <td>@text.Suffix_ENTNAHME</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    @Model.Message
+                </div>
+            }
+        }*@
+    </form>
+
+    </body>
+</html>
+
+
